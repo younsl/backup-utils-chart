@@ -1,0 +1,81 @@
+{{- if .Values.backupUtils.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: github-backup-utils-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "github-backup-utils.labels" . | nindent 4 }}
+data:
+  known_hosts: "{{ .Values.backupUtils.knownHosts }}"
+
+  backup.config: |
+    GHE_HOSTNAME="{{ .Values.backupUtils.backupConfig.githubEnterpriseHostname }}"
+    GHE_DATA_DIR="/data"
+    GHE_NUM_SNAPSHOTS={{ .Values.backupUtils.backupConfig.snapshotRententionNumber | int | default 72 }}
+
+    #GHE_RESTORE_HOST="github-standby.example.com"
+    #GHE_RESTORE_SKIP_AUDIT_LOGS=no
+    GHE_VERBOSE_LOG="/data/log/backup-verbose.log"
+    GHE_EXTRA_SSH_OPTS="{{ .Values.backupUtils.backupConfig.extraCommandOptions }}"
+    #GHE_EXTRA_RSYNC_OPTS=""
+    
+    # If enabled and set to 'no', rsync warning message during backups will be suppressed.
+    #RSYNC_WARNING=no
+
+    # If set to 'yes', logging output will be colorized.
+    #
+    #OUTPUT_COLOR=no
+    
+    # If set to 'no', GHE_DATA_DIR will not be created automatically
+    # and restore/backup will exit 8
+    #
+    #GHE_CREATE_DATA_DIR=yes
+    
+    # If set to 'yes', git fsck will run on the repositories
+    # and print some additional info.
+    #
+    # WARNING: do not enable this, only useful for debugging/development
+    #GHE_BACKUP_FSCK=no
+    
+    # Cadence of MSSQL backups
+    # <full>,<differential>,<transactionlog> all in minutes
+    # e.g.
+    #   - Full backup every week (10080 minutes)
+    #   - Differential backup every day (1440 minutes)
+    #   - Transactionlog backup every 15 minutes
+    #
+    #GHE_MSSQL_BACKUP_CADENCE=10080,1440,15
+    
+    # If set to 'yes', ghe-backup jobs will run in parallel. Defaults to 'no'.
+    #
+    #GHE_PARALLEL_ENABLED=yes
+    
+    # Sets the maximum number of jobs to run in parallel. Defaults to the number
+    # of available processing units on the machine.
+    #
+    #GHE_PARALLEL_MAX_JOBS=2
+    
+    # Sets the maximum number of rsync jobs to run in parallel. Defaults to the
+    # configured GHE_PARALLEL_MAX_JOBS, or the number of available processing 
+    # units on the machine.
+    #
+    # GHE_PARALLEL_RSYNC_MAX_JOBS=3
+    
+    # When jobs are running in parallel wait as needed to avoid starting new jobs
+    # when the system's load average is not below the specified percentage. Defaults to
+    # unrestricted.
+    #
+    #GHE_PARALLEL_MAX_LOAD=50
+    
+    # When running an external mysql database, run this script to trigger a MySQL backup
+    # rather than attempting to backup via backup-utils directly.
+    #EXTERNAL_DATABASE_BACKUP_SCRIPT="/bin/false"
+    
+    # When running an external mysql database, run this script to trigger a MySQL restore
+    # rather than attempting to backup via backup-utils directly.
+    #EXTERNAL_DATABASE_RESTORE_SCRIPT="/bin/false"
+    
+    # If set to 'yes', Pages data will be included in backup and restore. Defaults to 'yes'
+    #GHE_BACKUP_PAGES=no
+{{- end }}
