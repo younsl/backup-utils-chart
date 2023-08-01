@@ -16,7 +16,7 @@ data:
 
     #GHE_RESTORE_HOST="github-standby.example.com"
     #GHE_RESTORE_SKIP_AUDIT_LOGS=no
-    GHE_VERBOSE_LOG="/data/log/backup-verbose.log"
+    GHE_VERBOSE_LOG="{{ .Values.backupUtils.backupConfig.verboseLogFile }}"
     GHE_EXTRA_SSH_OPTS="{{ .Values.backupUtils.backupConfig.extraCommandOptions }}"
     #GHE_EXTRA_RSYNC_OPTS=""
     
