@@ -67,7 +67,7 @@ cd backup-utils
 
 ```bash
 docker build \
-    -t github-backup-utils:v3.9.1 \
+    -t github-backup-utils:v3.10.0 \
     -f Dockerfile \
     --platform linux/amd64 .
 ```
@@ -83,10 +83,10 @@ Push the built image to your private ECR repository.
 
 ```bash
 # Change the tag of an image
-docker tag backup-utils:v3.9.1 111122223333.dkr.ecr.ap-northeast-2.amazonaws.com/github-backup-utils:v3.9.1
+docker tag backup-utils:v3.10.0 111122223333.dkr.ecr.ap-northeast-2.amazonaws.com/github-backup-utils:v3.10.0
 
 # Push docker image to private Amazon ECR
-docker push 111122223333.dkr.ecr.ap-northeast-2.amazonaws.com/github-backup-utils:v3.9.1
+docker push 111122223333.dkr.ecr.ap-northeast-2.amazonaws.com/github-backup-utils:v3.10.0
 ```
 
 &nbsp;
