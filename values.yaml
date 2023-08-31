@@ -25,6 +25,9 @@ backupUtils:
     # Maximum number of snapshots to keep
     snapshotRententionNumber: 72
 
+    # Absolute path where detailed backup logs are stored
+    verboseLogFile: "/data/backup-verbose.log"
+
     # Extra SSH options for backup-utils pod to connect to GHE instances
     # We usually recommend not to modify the default value for stability reasons
     extraCommandOptions: "-i /ghe-ssh/id_ed25519 -o UserKnownHostsFile=/ghe-ssh/known_hosts"
